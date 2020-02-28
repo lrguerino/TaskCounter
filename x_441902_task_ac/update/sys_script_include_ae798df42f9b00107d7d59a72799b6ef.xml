@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_441902_task_ac.TaskCounter</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>This script include manages all the server logic for the Task Counter functionality.&#13;
+&#13;
+You can initialize this object without any parameters, and then set the user by using the setUser / setBatch methods.&#13;
+&#13;
+var Counter = new TaskCounter();&#13;
+counter.setUser(UserIdentifier);&#13;
+&#13;
+Once you've set the user, you can then call the method:&#13;
+counter.getTotalByAssignee();&#13;
+&#13;
+If you have not set the user, you can then call the method:&#13;
+counter.getTotalForAll();&#13;
+&#13;
+You can also initialize this object by passing in the user and isBatch&#13;
+var Counter = new TaskCounter({userIdentifer : value, isBatch});</description>
+        <name>TaskCounter</name>
+        <script><![CDATA[var TaskCounter = Class.create();
+
+// *********************************************************************************
+// INTERNAL API
+// *********************************************************************************
+
+var TABLES = {
+	TASK: "task",
+	USER: "sys_user"
+};
+
+var PROPS = {
+	PAYLOAD_MAP: "x_441902_task_ac.payload.mapping"
+};
+
+var COUNT_FIELD = "assigned_to";
+var USER_QUERY = "roles=itil^active=true";
+
+var isValidGR = function (obj) {
+	if (!gs.nil(obj) && (obj instanceof GlideRecord)) {
+		return obj.isValidRecord();
+	}
+	return false;
+};
+
+var getAllUsers = function () {
+	var users = new GlideRecord(TABLES.USER);
+	users.addEncodedQuery(USER_QUERY);
+	users.query();
+	return users;
+};
+
+var isEnabled = function () {
+	return gs.nil(gs.getProperty(PROPS.PAYLOAD_MAP)) ? false : true;
+};
+
+var isValidTable = function (table) {
+	var propValue = gs.getProperty(PROPS.PAYLOAD_MAP);
+	if (gs.nil(propValue) || gs.nil(table)) {
+		return false;
+	}
+	return (Object.keys(JSON.parse(propValue)).indexOf(table) === -1) ? false : true;
+};
+
+TaskCounter.isEnabled = isEnabled;
+TaskCounter.isValidTable = isValidTable;
+
+// *********************************************************************************
+// EXTERNAL API
+// *********************************************************************************
+
+TaskCounter.prototype = {
+	
+	/* 
+	 * During the initialization, when not a batch, we make sure we have a valid user GlideRecord
+	 * For batch processing we ignore the first parameter
+	 *
+     * @author Lucas Rivetti Guerino
+     *
+	 * @parm spec (JSObject): 
+			 userIdentifier (object): User SysID as a string or a valid User GlideRecord
+			 isBatch (boolean): True if you want to process multiple users. It defaults to false
+     * @return (void)
+     */
+	initialize: function (spec) {
+		this.setBatch(spec.isBatch);
+		this.setUser(spec.userIdentifier);
+	},
+
+	setUser: function (value) {
+		// We ignore if it's a batch process or userIdentifier is undefined
+		if (this.isBatch || gs.nil(value)) {
+			return;
+		}
+		if (isValidGR(value)) {
+			// Valid GlideRecord object
+			this.user = value;
+		} else {
+			// userIdentifier should be a sys_id so we go fetch the GlideRecord
+			this.user = new GlideRecord(TABLES.USER);
+			this.user.get(value);
+			// Finally we check if we've got the right GlideRecord
+			if (!isValidGR(this.user)) {
+				throw new Error(
+					"[" + this.type + "] - [setUser] - Unable to set user as a GlideRecord object"
+				);
+			}
+		}
+	},
+	
+	setBatch: function (value) {
+		if (gs.nil(value)) {
+			// We default the isBatch to false in case it's not passed in
+			this.isBatch = false;
+		} else {
+			this.isBatch = value;
+		}
+	},
+	
+	/* 
+	 * Counts the number of tasks assigned to a given user
+	 *
+     * @author Lucas Rivetti Guerino
+     *
+     * @return (Stringified JSON)
+	   The user sys id is the parent oject and the table names are attributes of the parent object
+		{
+			"681b365ec0a80164000fb0b05854a0cd": {
+				"change_request": "5",
+				"incident": "17",
+				"incident_alert_task": "9",
+				"problem": "9"
+			}
+		}
+     */
+	getTotalByAssignee: function () {
+		try {
+			var output = {};
+			var tasks = new GlideAggregate(TABLES.TASK);
+			tasks.addAggregate("COUNT", COUNT_FIELD);
+			tasks.addQuery("assigned_to", this.user.getUniqueValue());
+			tasks.addQuery("active", true);
+			tasks.addNotNullQuery(COUNT_FIELD);
+			tasks.groupBy("sys_class_name");
+			tasks.query();
+			output[this.user.getUniqueValue()] = {};
+			while (tasks.next()) {
+				output[this.user.getUniqueValue()][tasks.getValue("sys_class_name")] = {};
+				output[this.user.getUniqueValue()][tasks.getValue("sys_class_name")] = tasks.getAggregate("COUNT", COUNT_FIELD);
+			}
+			return JSON.stringify(output);
+		} catch (error) {
+			throw new Error(
+				"[" + this.type + "] - [getTotalByAssignee] - [Runtime error]/n" + error
+			);
+		}
+	},
+	
+	getTotalForAll: function () {
+		var arrayOutput = [];
+		var output = {};
+		var users = getAllUsers();
+		if (!users.hasNext()) {
+			gs.warn(
+				"[" + this.type + "] - [getTotalForAll] - No users found by running query:\n" + users.getEncodedQuery()
+			);
+			return;
+		}
+		while (users.next()) {
+			this.setBatch(false);
+			this.setUser(users);
+			output = JSON.parse(this.getTotalByAssignee());
+			// We ignore objects that do not have any attributes.
+			// The attributes of these objects are the name of the task tables
+			// If the user is not assigned to any of these tables then we don't want to return
+			if (Object.keys(output[this.user.getUniqueValue()]).length === 0) {
+				continue;
+			}
+			arrayOutput.push(output);
+		}
+		return JSON.stringify(arrayOutput);
+	},
+	
+	/* 
+	 * Returns the number of tasks for a given table
+	 * The u_task_assignment_summary field on the user table needs to be already populated.
+	 *
+     * @author Lucas Rivetti Guerino
+     *
+     * @return (integer): Total number of tasks
+     */
+	getCountByTable: function (table) {
+		try {
+			var jsonSummary = {};
+			if (!isValidGR(this.user) || gs.nil(this.user.u_task_assignment_summary) || gs.nill(table)) {
+				return 0;
+			}
+			jsonSummary = JSON.parse(this.user.u_task_assignment_summary);
+			if (Object.keys(jsonSummary).indexOf(table) === -1) {
+				return 0;
+			}
+			return parseInt(jsonSummary[table]);
+		} catch (error) {
+			return 0;
+		}
+	},
+
+    type: "TaskCounter"
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-02-28 13:40:17</sys_created_on>
+        <sys_id>ae798df42f9b00107d7d59a72799b6ef</sys_id>
+        <sys_mod_count>30</sys_mod_count>
+        <sys_name>TaskCounter</sys_name>
+        <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
+        <sys_update_name>sys_script_include_ae798df42f9b00107d7d59a72799b6ef</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-02-28 17:05:57</sys_updated_on>
+    </sys_script_include>
+</record_update>

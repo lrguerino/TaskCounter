@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Task Summary" section_id="2b0cd1782fdb00107d7d59a72799b610" sys_domain="global" table="sys_user" version="3" view="task_counter">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>x_441902_task_ac_total_incidents_assigned</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2020-02-28 15:00:50</sys_created_on>
+            <sys_id>2d3c51782fdb00107d7d59a72799b647</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Task Summary" display_value="Task Summary" name="sys_user" sys_domain="global" view="867b51382fdb00107d7d59a72799b687">2b0cd1782fdb00107d7d59a72799b610</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2020-02-28 15:00:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>x_441902_task_ac_task_assignment_summary</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2020-02-28 15:00:50</sys_created_on>
+            <sys_id>ad3c51782fdb00107d7d59a72799b647</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Task Summary" display_value="Task Summary" name="sys_user" sys_domain="global" view="867b51382fdb00107d7d59a72799b687">2b0cd1782fdb00107d7d59a72799b610</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2020-02-28 15:00:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>x_441902_task_ac_raw_assignment_payload</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2020-02-28 15:00:50</sys_created_on>
+            <sys_id>213c51782fdb00107d7d59a72799b648</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Task Summary" display_value="Task Summary" name="sys_user" sys_domain="global" view="867b51382fdb00107d7d59a72799b687">2b0cd1782fdb00107d7d59a72799b610</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2020-02-28 15:00:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Task Summary</caption>
+            <header>false</header>
+            <name>sys_user</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2020-02-28 15:00:09</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>2b0cd1782fdb00107d7d59a72799b610</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Task Summary</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
+            <sys_update_name>sys_ui_section_2b0cd1782fdb00107d7d59a72799b610</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2020-02-28 15:00:09</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Task Counter" name="task_counter">867b51382fdb00107d7d59a72799b687</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>
