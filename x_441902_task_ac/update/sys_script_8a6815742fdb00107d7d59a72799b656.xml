@@ -15,13 +15,13 @@
         <condition/>
         <description/>
         <execute_function>false</execute_function>
-        <filter_condition table="sys_properties">name=x_441902_task_ac.payload.mapping^valueVALCHANGES^EQ<item endquery="false" field="name" goto="false" newquery="false" operator="=" or="false" value="x_441902_task_ac.payload.mapping"/>
+        <filter_condition table="sys_properties">name=x_441902_task_ac.enable^valueVALCHANGES^EQ<item endquery="false" field="name" goto="false" newquery="false" operator="=" or="false" value="x_441902_task_ac.enable"/>
             <item endquery="false" field="value" goto="false" newquery="false" operator="VALCHANGES" or="false" value=""/>
             <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
         </filter_condition>
         <is_rest>false</is_rest>
         <message/>
-        <name>Batch Update Task Counter Payload </name>
+        <name>Batch Update User Payload </name>
         <order>100</order>
         <priority>100</priority>
         <rest_method/>
@@ -32,27 +32,24 @@
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous) {
 
-	var Counter = new TaskCounter({isBatch: true});
-	var payload = Counter.getTotalForAll();
-	var parsedOutput = JSON.parse(payload);
+	var Counter = {};
+	
+	if (!TaskCounter.isEnabled()) {
+		TaskCounter.resetFields();
+		return;
+	}
 
-	parsedOutput.forEach(function(output) {
+	Counter = new TaskCounter();
+
+	JSON.parse(Counter.getTotalForAll()).forEach(function (output) {
 		for (var userID in output) {
 			var userRecord = new GlideRecord("sys_user");
 			if (userRecord.get(userID + "")) {
-				if (gs.nil(current.value)) {
-					userRecord.setValue("x_441902_task_ac_total_incidents_assigned", 0);
-					userRecord.setValue("x_441902_task_ac_task_assignment_summary", "");
-					userRecord.setValue("x_441902_task_ac_raw_assignment_payload", "");
-					userRecord.setWorkflow(false);
-					userRecord.update();
-				} else {
-					userRecord.setValue(
-						"x_441902_task_ac_raw_assignment_payload", 
-						JSON.stringify(output)
-					);
-					userRecord.update();
-				}
+				userRecord.setValue(
+					TaskCounter.FIELDS.RAW_PAYLOAD, 
+					JSON.stringify(output)
+				);
+				userRecord.update();
 			}
 		}
 	});
@@ -64,15 +61,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>8a6815742fdb00107d7d59a72799b656</sys_id>
-        <sys_mod_count>4</sys_mod_count>
-        <sys_name>Batch Update Task Counter Payload </sys_name>
+        <sys_mod_count>20</sys_mod_count>
+        <sys_name>Batch Update User Payload </sys_name>
         <sys_overrides/>
         <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
         <sys_policy/>
         <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
         <sys_update_name>sys_script_8a6815742fdb00107d7d59a72799b656</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-02-28 17:00:18</sys_updated_on>
+        <sys_updated_on>2020-03-04 12:01:44</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>

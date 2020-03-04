@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="DELETE">
+        <cleared>false</cleared>
+        <disabled>true</disabled>
+        <field>x_441902_task_ac_total_incidents_assigned</field>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-03-04 13:16:25</sys_created_on>
+        <sys_id>fc44b6da2f9300107d7d59a72799b67b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_441902_task_ac_total_incidents_assigned</sys_name>
+        <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
+        <sys_update_name>sys_ui_policy_action_fc44b6da2f9300107d7d59a72799b67b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-03-04 13:16:25</sys_updated_on>
+        <table>sys_user</table>
+        <ui_policy display_value="Lock Down Counter Fields">7ff336da2f9300107d7d59a72799b634</ui_policy>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</application>
+        <file_path/>
+        <instance_id>f4fa8486db25c8104d2bac44d4961915</instance_id>
+        <instance_name>dev95822</instance_name>
+        <name>sys_ui_policy_action_fc44b6da2f9300107d7d59a72799b67b</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>x_441902_task_ac_total_incidents_assigned</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2020-03-04 13:16:25</sys_created_on><sys_id>fc44b6da2f9300107d7d59a72799b67b</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_441902_task_ac_total_incidents_assigned</sys_name><sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package><sys_policy/><sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope><sys_update_name>sys_ui_policy_action_fc44b6da2f9300107d7d59a72799b67b</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2020-03-04 13:16:25</sys_updated_on><table>sys_user</table><ui_policy display_value="Lock Down Counter Fields">7ff336da2f9300107d7d59a72799b634</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+        <payload_hash>-1959371523</payload_hash>
+        <record_name>x_441902_task_ac_total_incidents_assigned</record_name>
+        <reverted_from/>
+        <source>833979302f5f00107d7d59a72799b6ad</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-03-04 13:16:26</sys_created_on>
+        <sys_id>7c44b6da2f9300107d7d59a72799b67d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>170a5b0b41f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-03-04 13:16:26</sys_updated_on>
+        <type>UI Policy Action</type>
+        <update_guid>b444b6dac49300102cc8adce57caad7d</update_guid>
+        <update_guid_history>b444b6dac49300102cc8adce57caad7d:-1959371523</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-03-04 13:24:18</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_policy_action">sys_ui_policy_action</sys_db_object>
+        <sys_id>5dbd67bbb7b14a22a8dabca3514e9e04</sys_id>
+        <sys_metadata>fc44b6da2f9300107d7d59a72799b67b</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_441902_task_ac_total_incidents_assigned</sys_name>
+        <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
+        <sys_parent display_value="">7ff336da2f9300107d7d59a72799b634</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
+        <sys_scope_delete display_value="">3c10af15f34d4a129dd38ee57c61fda4</sys_scope_delete>
+        <sys_update_name>sys_ui_policy_action_fc44b6da2f9300107d7d59a72799b67b</sys_update_name>
+        <sys_update_version display_value="sys_ui_policy_action_fc44b6da2f9300107d7d59a72799b67b">7c44b6da2f9300107d7d59a72799b67d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-03-04 13:24:18</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
