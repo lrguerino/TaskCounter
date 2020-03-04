@@ -176,6 +176,7 @@ TaskCounter.prototype = {
 	getTotalByAssignee: function () {
 		try {
 			var output = {};
+			var count = 0;
 			var tasks = new GlideAggregate(TABLES.TASK);
 			tasks.addAggregate("COUNT", FIELDS.ASSIGNED_TO);
 			tasks.addQuery("assigned_to", this.user.getUniqueValue());
@@ -184,10 +185,14 @@ TaskCounter.prototype = {
 			tasks.addQuery("sys_class_name", "IN", getListTables());
 			tasks.groupBy("sys_class_name");
 			tasks.query();
+			if (!tasks.hasNext()) {
+				return "";
+			}
 			output[this.user.getUniqueValue()] = {};
 			while (tasks.next()) {
+				count = tasks.getAggregate("COUNT", FIELDS.ASSIGNED_TO);
 				output[this.user.getUniqueValue()][tasks.getValue("sys_class_name")] = {};
-				output[this.user.getUniqueValue()][tasks.getValue("sys_class_name")] = tasks.getAggregate("COUNT", FIELDS.ASSIGNED_TO);
+				output[this.user.getUniqueValue()][tasks.getValue("sys_class_name")] = count;
 			}
 			return JSON.stringify(output);
 		} catch (error) {
@@ -232,13 +237,13 @@ TaskCounter.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-02-28 13:40:17</sys_created_on>
         <sys_id>ae798df42f9b00107d7d59a72799b6ef</sys_id>
-        <sys_mod_count>84</sys_mod_count>
+        <sys_mod_count>89</sys_mod_count>
         <sys_name>TaskCounter</sys_name>
         <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
         <sys_update_name>sys_script_include_ae798df42f9b00107d7d59a72799b6ef</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-03-04 14:34:15</sys_updated_on>
+        <sys_updated_on>2020-03-04 15:05:47</sys_updated_on>
     </sys_script_include>
 </record_update>
