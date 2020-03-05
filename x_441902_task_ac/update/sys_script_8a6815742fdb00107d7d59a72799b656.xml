@@ -32,18 +32,19 @@
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous) {
 
-	var Counter = {};
-	
+	var TaskUtil = new TaskCounter();
+	var output = {};
+
 	if (!TaskCounter.isEnabled()) {
-		TaskCounter.resetFields();
+		TaskUtil.resetFields();
 		return;
 	}
 
-	Counter = new TaskCounter();
+	output = JSON.parse(TaskUtil.getTotalForAll());
 
-	JSON.parse(Counter.getTotalForAll()).forEach(function (output) {
+	output.forEach(function(output) {
 		for (var userID in output) {
-			var userRecord = new GlideRecord("sys_user");
+			var userRecord = new GlideRecord(TaskCounter.TABLES.USER);
 			if (userRecord.get(userID + "")) {
 				userRecord.setValue(
 					TaskCounter.FIELDS.RAW_PAYLOAD, 
@@ -61,7 +62,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>8a6815742fdb00107d7d59a72799b656</sys_id>
-        <sys_mod_count>20</sys_mod_count>
+        <sys_mod_count>21</sys_mod_count>
         <sys_name>Batch Update User Payload </sys_name>
         <sys_overrides/>
         <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
@@ -69,7 +70,7 @@
         <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
         <sys_update_name>sys_script_8a6815742fdb00107d7d59a72799b656</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-03-04 12:01:44</sys_updated_on>
+        <sys_updated_on>2020-03-05 21:27:56</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>

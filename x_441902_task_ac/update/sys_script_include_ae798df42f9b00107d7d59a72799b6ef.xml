@@ -94,25 +94,16 @@ var getListTables = function () {
 	return Object.keys(JSON.parse(propValue));
 };
 
-var resetFields = function () {
-	var users = getAllUsers();
-	while (users.next()) {
-		users.setValue(FIELDS.RAW_PAYLOAD, "");
-		users.setValue(FIELDS.SUMMARY, "");
-		users.update();
-	}
-};
-
 // *********************************************************************************
 // EXTERNAL API
 // *********************************************************************************
 
 TaskCounter.isEnabled = isEnabled;
 TaskCounter.isValidTable = isValidTable;
-TaskCounter.resetFields = resetFields;
 
 TaskCounter.PROPS = PROPS;
 TaskCounter.FIELDS = FIELDS;
+TaskCounter.TABLES = TABLES;
 
 TaskCounter.prototype = {
 	
@@ -126,7 +117,7 @@ TaskCounter.prototype = {
      */
 	initialize: function (userRecord) {
 		
-		if (!userRecord) {
+		if (gs.nil(userRecord)) {
 			this.setBatch(true);
 			return;
 		}
@@ -149,7 +140,8 @@ TaskCounter.prototype = {
 			return;
 		}
 		throw new Error(
-			"[" + this.type + "] - [setUser] - Unable to set user as a GlideRecord object"
+			"[" + this.type + "] - [setUser] - "+
+			"Unable to set user as a GlideRecord object"
 		);
 	},
 
@@ -197,7 +189,8 @@ TaskCounter.prototype = {
 			return JSON.stringify(output);
 		} catch (error) {
 			throw new Error(
-				"[" + this.type + "] - [getTotalByAssignee] - [Runtime error]/n" + error
+				"[" + this.type + "] - [getTotalByAssignee] - " +
+				"[Runtime error]: " + error
 			);
 		}
 	},
@@ -230,6 +223,45 @@ TaskCounter.prototype = {
 		}
 		return JSON.stringify(arrayOutput);
 	},
+	
+	resetFields: function () {
+		var users = {};
+		if (!this.isBatch) {
+			return;
+		}
+		users = getAllUsers();
+		while (users.next()) {
+			users.setValue(FIELDS.RAW_PAYLOAD, "");
+			users.setValue(FIELDS.SUMMARY, "");
+			users.update();
+		}
+	},
+	
+	/* 
+	 * Returns the number of tasks for a given table
+	 * The x_441902_task_ac_task_assignment_summary field on the user table needs to be already populated.
+	 *
+     * @author Lucas Rivetti Guerino
+     *
+     * @return (integer): Total number of tasks
+     */
+	getCountByTable: function (table) {
+		try {
+			var jsonSummary = {};
+			if (!isValidGR(this.user, TABLES.USER) || 
+				gs.nil(this.user.x_441902_task_ac_task_assignment_summary) || 
+				gs.nil(table)) {
+				return 0;
+			}
+			jsonSummary = JSON.parse(this.user.x_441902_task_ac_task_assignment_summary);
+			if (Object.keys(jsonSummary).indexOf(table) === -1) {
+				return 0;
+			}
+			return parseInt(jsonSummary[table]);
+		} catch (error) {
+			return 0;
+		}
+	},
 
     type: "TaskCounter"
 };]]></script>
@@ -237,13 +269,13 @@ TaskCounter.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-02-28 13:40:17</sys_created_on>
         <sys_id>ae798df42f9b00107d7d59a72799b6ef</sys_id>
-        <sys_mod_count>89</sys_mod_count>
+        <sys_mod_count>92</sys_mod_count>
         <sys_name>TaskCounter</sys_name>
         <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
         <sys_update_name>sys_script_include_ae798df42f9b00107d7d59a72799b6ef</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-03-04 15:05:47</sys_updated_on>
+        <sys_updated_on>2020-03-05 21:33:36</sys_updated_on>
     </sys_script_include>
 </record_update>
