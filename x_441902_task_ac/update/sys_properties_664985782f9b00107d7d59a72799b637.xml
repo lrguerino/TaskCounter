@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
     <sys_properties action="INSERT_OR_UPDATE">
         <choices/>
-        <description>Ffield mapping in a JSON format for the Task Counter process.&#13;
-On the left, you have to specify the task-related table name and, on the right, the field name on the sys_user table you want to map to.&#13;
-&#13;
-JSON Format:&#13;
-&#13;
-{TABLE_NAME : FIELD_NAME_TO_MAP}&#13;
-{"incident" : "x_441902_task_ac_total_incidents_assigned"}</description>
+        <description>Ffield mapping in a JSON format for the Task Counter process.&lt;/br&gt;&#13;
+On the left, you have to specify the task-related table name and, on the right, the field name on the sys_user table you want to map to.&lt;/br&gt;&#13;
+{TABLE_NAME : FIELD_NAME_TO_MAP}</description>
         <ignore_cache>false</ignore_cache>
         <is_private>false</is_private>
         <name>x_441902_task_ac.payload.mapping</name>
@@ -17,16 +13,16 @@ JSON Format:&#13;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-02-28 13:38:31</sys_created_on>
         <sys_id>664985782f9b00107d7d59a72799b637</sys_id>
-        <sys_mod_count>43</sys_mod_count>
+        <sys_mod_count>44</sys_mod_count>
         <sys_name>x_441902_task_ac.payload.mapping</sys_name>
         <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
         <sys_policy/>
         <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
         <sys_update_name>sys_properties_664985782f9b00107d7d59a72799b637</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-03-04 14:35:59</sys_updated_on>
+        <sys_updated_on>2020-03-09 13:03:34</sys_updated_on>
         <type>string</type>
-        <value>{"incident" : "x_441902_task_ac_total_incidents_assigned", "change_request" : "", "problem" : ""}</value>
+        <value>{"incident" : "x_toho_task_count_total_incidents_assigned"}</value>
         <write_roles/>
     </sys_properties>
     <sys_translated_text action="delete_multiple" query="documentkey=664985782f9b00107d7d59a72799b637"/>

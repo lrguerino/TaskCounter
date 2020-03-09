@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_style">
+    <sys_ui_style action="INSERT_OR_UPDATE">
+        <alt/>
+        <element>x_441902_task_ac_total_incidents_assigned</element>
+        <name>sys_user</name>
+        <style>background-color:Tomato</style>
+        <sys_class_name>sys_ui_style</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-03-09 12:56:21</sys_created_on>
+        <sys_id>0a8f90842f6f80107d7d59a72799b621</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>sys_user</sys_name>
+        <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
+        <sys_update_name>sys_ui_style_0a8f90842f6f80107d7d59a72799b621</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-03-09 12:56:21</sys_updated_on>
+        <value>javascript: TaskCounter.isEnabled() &amp;&amp; parseInt(current.getValue("x_toho_task_count_total_incidents_assigned")) &gt; 20</value>
+    </sys_ui_style>
+    <sys_translated_text action="delete_multiple" query="documentkey=0a8f90842f6f80107d7d59a72799b621"/>
+</record_update>

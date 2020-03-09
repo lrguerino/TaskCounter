@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="DELETE">
+        <active>true</active>
+        <admin_overrides>false</admin_overrides>
+        <advanced>false</advanced>
+        <condition/>
+        <description/>
+        <name>sys_user.x_441902_task_ac_total_incidents_assigned</name>
+        <operation display_value="write">write</operation>
+        <script/>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-02-28 15:07:26</sys_created_on>
+        <sys_id>5a9d59b82fdb00107d7d59a72799b6ab</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>sys_user.x_441902_task_ac_total_incidents_assigned</sys_name>
+        <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
+        <sys_update_name>sys_security_acl_5a9d59b82fdb00107d7d59a72799b6ab</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-02-28 15:07:26</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</application>
+        <file_path/>
+        <instance_id>f4fa8486db25c8104d2bac44d4961915</instance_id>
+        <instance_name>dev95822</instance_name>
+        <name>sys_security_acl_5a9d59b82fdb00107d7d59a72799b6ab</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl"><sys_security_acl action="INSERT_OR_UPDATE"><active>true</active><admin_overrides>false</admin_overrides><advanced>false</advanced><condition/><description/><name>sys_user.x_441902_task_ac_total_incidents_assigned</name><operation display_value="write">write</operation><script/><sys_class_name>sys_security_acl</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2020-02-28 15:07:26</sys_created_on><sys_id>5a9d59b82fdb00107d7d59a72799b6ab</sys_id><sys_mod_count>0</sys_mod_count><sys_name>sys_user.x_441902_task_ac_total_incidents_assigned</sys_name><sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package><sys_policy/><sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope><sys_update_name>sys_security_acl_5a9d59b82fdb00107d7d59a72799b6ab</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2020-02-28 15:07:26</sys_updated_on><type display_value="record">record</type></sys_security_acl></record_update>]]></payload>
+        <payload_hash>-1504210787</payload_hash>
+        <record_name>sys_user.x_441902_task_ac_total_incidents_assigned</record_name>
+        <reverted_from/>
+        <source>99d84d382f9b00107d7d59a72799b654</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-02-28 15:07:26</sys_created_on>
+        <sys_id>96bd11f82fdb00107d7d59a72799b60e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1708c56886f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-02-28 15:07:26</sys_updated_on>
+        <type>Access Control</type>
+        <update_guid>debd11f8bbdb0010f9f6030a55f61e0d</update_guid>
+        <update_guid_history>debd11f8bbdb0010f9f6030a55f61e0d:-1504210787</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-03-09 10:36:46</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl">sys_security_acl</sys_db_object>
+        <sys_id>3323bda8e7404d849d910c64f702b790</sys_id>
+        <sys_metadata>5a9d59b82fdb00107d7d59a72799b6ab</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>sys_user.x_441902_task_ac_total_incidents_assigned</sys_name>
+        <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
+        <sys_parent display_value="Total incidents assigned">293391702fdb00107d7d59a72799b69d</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
+        <sys_scope_delete display_value="">3c10af15f34d4a129dd38ee57c61fda4</sys_scope_delete>
+        <sys_update_name>sys_security_acl_5a9d59b82fdb00107d7d59a72799b6ab</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_5a9d59b82fdb00107d7d59a72799b6ab">96bd11f82fdb00107d7d59a72799b60e</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-03-09 10:36:46</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
