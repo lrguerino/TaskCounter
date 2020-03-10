@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>true</applies_extended>
+        <condition/>
+        <description>This client script will highlight how many incidents a given assignee has as soon as the assigned_to field is updated.&#13;
+The following scratchpad variables are available:&#13;
+&#13;
+g_scratchpad.THRESHOLDS: JS Object&#13;
+g_scratchpad.MAPPING: JS object&#13;
+g_scratchpad.canRun: boolean</description>
+        <field>assigned_to</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Set Assignee Task Counter</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+
+    var ASSIGNED_TO_FIELD = control.name.split(".")[1];
+
+    g_form.hideFieldMsg(ASSIGNED_TO_FIELD, true);
+
+    if (!g_scratchpad.canRun || isLoading || newValue === "") {
+        return;
+    }
+
+    var assignedTo = g_form.getReference(ASSIGNED_TO_FIELD, function parse(output) {
+        var total = 0;
+        var messageType = "error";
+        var mapping = g_scratchpad.MAPPING;
+        var threshold = g_scratchpad.THRESHOLDS;
+        if (output) {
+            for (var table in mapping) {
+                if (table === g_form.getTableName()) {
+                    total = output[mapping[table]];
+                    if (total >= 0 && total <= threshold.LOW) {
+                        messageType = "info";
+                    } else if (total > threshold.LOW && total <= threshold.MEDIUM) {
+                        messageType = "warning";
+                    }
+                    g_form.showFieldMsg(
+                        ASSIGNED_TO_FIELD,
+                        "This user has " + total + " " + table + "(s) assigned",
+                        messageType
+                    );
+                    break;
+                }
+            }
+        }
+    });
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-03-09 15:42:03</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>f35505402fef80107d7d59a72799b61c</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Set Assignee Task Counter</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
+        <sys_update_name>sys_script_client_f35505402fef80107d7d59a72799b61c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-03-10 09:31:48</sys_updated_on>
+        <table>task</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

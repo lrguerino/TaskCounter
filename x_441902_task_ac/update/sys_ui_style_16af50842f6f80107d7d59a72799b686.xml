@@ -8,15 +8,15 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-03-09 12:56:33</sys_created_on>
         <sys_id>16af50842f6f80107d7d59a72799b686</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>sys_user</sys_name>
         <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
         <sys_policy/>
         <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
         <sys_update_name>sys_ui_style_16af50842f6f80107d7d59a72799b686</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-03-09 12:56:33</sys_updated_on>
-        <value>javascript: TaskCounter.isEnabled() &amp;&amp; parseInt(current.getValue("x_toho_task_count_total_incidents_assigned")) &gt; 10 &amp;&amp; parseInt(current.getValue("x_toho_task_count_total_incidents_assigned")) &lt;= 20</value>
+        <sys_updated_on>2020-03-10 09:30:23</sys_updated_on>
+        <value>javascript: TaskCounter.isEnabled() &amp;&amp; parseInt(current.getValue("x_toho_task_count_total_incidents_assigned")) &gt; TaskCounter.THRESHOLDS.LOW &amp;&amp; parseInt(current.getValue("x_toho_task_count_total_incidents_assigned")) &lt;=TaskCounter.THRESHOLDS.MEDIUM</value>
     </sys_ui_style>
     <sys_translated_text action="delete_multiple" query="documentkey=16af50842f6f80107d7d59a72799b686"/>
 </record_update>

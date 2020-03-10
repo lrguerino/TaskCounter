@@ -35,7 +35,15 @@ var TABLES = {
 
 var PROPS = {
 	PAYLOAD_MAP: "x_441902_task_ac.payload.mapping",
-	ENABLED: "x_441902_task_ac.enable"
+	ENABLED: "x_441902_task_ac.enable",
+	FIELD_STYLE: "x_441902_task_ac.field_form_style.enable",
+	THRESHOLD_LOW: "x_441902_task_ac.assigned_to.threshold.low",
+	THRESHOLD_MEDIUM: "x_441902_task_ac.assigned_to.threshold.medium"
+};
+
+var THRESHOLDS = {
+	LOW: parseInt(gs.getProperty(PROPS.THRESHOLD_LOW, 10)),
+	MEDIUM: parseInt(gs.getProperty(PROPS.THRESHOLD_MEDIUM, 20))
 };
 
 var FIELDS = {
@@ -64,6 +72,12 @@ var getAllUsers = function () {
 
 var isEnabled = function () {
 	return (gs.getProperty(PROPS.ENABLED, "false") === "true")
+		? true 
+		: false;
+};
+
+var isFieldStyleEnabled = function () {
+	return (gs.getProperty(PROPS.FIELD_STYLE, "false") === "true")
 		? true 
 		: false;
 };
@@ -99,11 +113,13 @@ var getListTables = function () {
 // *********************************************************************************
 
 TaskCounter.isEnabled = isEnabled;
+TaskCounter.isFieldStyleEnabled = isFieldStyleEnabled;
 TaskCounter.isValidTable = isValidTable;
 
 TaskCounter.PROPS = PROPS;
 TaskCounter.FIELDS = FIELDS;
 TaskCounter.TABLES = TABLES;
+TaskCounter.THRESHOLDS = THRESHOLDS;
 
 TaskCounter.prototype = {
 	
@@ -236,32 +252,6 @@ TaskCounter.prototype = {
 			users.update();
 		}
 	},
-	
-	/* 
-	 * Returns the number of tasks for a given table
-	 * The x_441902_task_ac_task_assignment_summary field on the user table needs to be already populated.
-	 *
-     * @author Lucas Rivetti Guerino
-     *
-     * @return (integer): Total number of tasks
-     */
-	getCountByTable: function (table) {
-		try {
-			var jsonSummary = {};
-			if (!isValidGR(this.user, TABLES.USER) || 
-				gs.nil(this.user.x_441902_task_ac_task_assignment_summary) || 
-				gs.nil(table)) {
-				return 0;
-			}
-			jsonSummary = JSON.parse(this.user.x_441902_task_ac_task_assignment_summary);
-			if (Object.keys(jsonSummary).indexOf(table) === -1) {
-				return 0;
-			}
-			return parseInt(jsonSummary[table]);
-		} catch (error) {
-			return 0;
-		}
-	},
 
     type: "TaskCounter"
 };]]></script>
@@ -269,13 +259,13 @@ TaskCounter.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-02-28 13:40:17</sys_created_on>
         <sys_id>ae798df42f9b00107d7d59a72799b6ef</sys_id>
-        <sys_mod_count>92</sys_mod_count>
+        <sys_mod_count>97</sys_mod_count>
         <sys_name>TaskCounter</sys_name>
         <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
         <sys_update_name>sys_script_include_ae798df42f9b00107d7d59a72799b6ef</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-03-05 21:33:36</sys_updated_on>
+        <sys_updated_on>2020-03-10 09:32:44</sys_updated_on>
     </sys_script_include>
 </record_update>
