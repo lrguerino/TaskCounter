@@ -34,25 +34,28 @@
 
 	var TaskUtil = new TaskCounter();
 	var output = {};
+	var mapping = [];
 
-	if (!TaskCounter.isEnabled()) {
+	if (current.getValue("value") === "false") {
 		TaskUtil.resetFields();
 		return;
 	}
-
-	output = JSON.parse(TaskUtil.getTotalForAll());
-
-	output.forEach(function(output) {
-		for (var userID in output) {
-			var userRecord = new GlideRecord(TaskCounter.TABLES.USER);
-			if (userRecord.get(userID + "")) {
-				userRecord.setValue(
-					TaskCounter.FIELDS.RAW_PAYLOAD, 
-					JSON.stringify(output)
-				);
-				userRecord.update();
+	
+	mapping = Object.keys(JSON.parse(gs.getProperty(TaskCounter.PROPS.PAYLOAD_MAP)));
+	
+	mapping.forEach(function(table) {
+		JSON.parse(TaskUtil.getTotalForAll(table)).forEach(function(response) {
+			for (var userID in response) {
+				var userRecord = new GlideRecord(TaskCounter.TABLES.USER);
+				if (userRecord.get(userID + "")) {
+					userRecord.setValue(
+						TaskCounter.FIELDS.RAW_PAYLOAD, 
+						JSON.stringify(response)
+					);
+					userRecord.update();
+				}
 			}
-		}
+		});
 	});
 
 })(current, previous);]]></script>
@@ -62,7 +65,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>8a6815742fdb00107d7d59a72799b656</sys_id>
-        <sys_mod_count>21</sys_mod_count>
+        <sys_mod_count>22</sys_mod_count>
         <sys_name>Batch Update User Payload </sys_name>
         <sys_overrides/>
         <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
@@ -70,7 +73,7 @@
         <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
         <sys_update_name>sys_script_8a6815742fdb00107d7d59a72799b656</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-03-05 21:27:56</sys_updated_on>
+        <sys_updated_on>2020-03-11 18:37:40</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>

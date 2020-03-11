@@ -124,22 +124,26 @@ TaskCounter.THRESHOLDS = THRESHOLDS;
 TaskCounter.prototype = {
 	
     /* 
-     * We initiate all the necessary attributes throw an exception if the userRecord is invalid
+     * We initiate all the necessary attributes and throw an exception if no mapping table
 	 *
      * @author Lucas Rivetti Guerino
      *
-	 * @parm userRecord (GlideRecord): Valid GlideRecord poiting to the sys_user table
+	 * @parm userRecord (GlideRecord): Valid GlideRecord pointing to the sys_user table
      * @return (void)
      */
 	initialize: function (userRecord) {
 		
+		// In case the userRecord is not passed in we default to a batch process and abort
 		if (gs.nil(userRecord)) {
 			this.setBatch(true);
 			return;
 		}
 		
+		// Now we know we have a GlideRecord object
+		// The setUser method will double-check whether it's a valid GlideRecord
 		this.setUser(userRecord);
 
+		// The mapping global property might have been wiped out so we check
 		if (getListTables().length === 0) {
 			throw new Error (
 				"[" + this.type + "] - [initialize] - " +
@@ -149,6 +153,15 @@ TaskCounter.prototype = {
 		}
 	},
 
+	/* 
+     * Set the internal attribute this.user to the value passed in
+	 * If the value passed in isn't a valid user GlideRecord, exception is raised
+	 *
+     * @author Lucas Rivetti Guerino
+     *
+	 * @parm value (GlideRecord): Valid GlideRecord pointing to the sys_user table
+     * @return (void)
+     */
 	setUser: function (value) {
 		this.setBatch(false);
 		if (isValidGR(value, TABLES.USER)) {
@@ -161,6 +174,14 @@ TaskCounter.prototype = {
 		);
 	},
 
+	/* 
+     * Set the internal attribute this.isBatch to the value passed in
+	 *
+     * @author Lucas Rivetti Guerino
+     *
+	 * @parm value (boolean)
+     * @return (void)
+     */
     setBatch: function (value) {
         this.isBatch = value;
     },
@@ -170,6 +191,7 @@ TaskCounter.prototype = {
 	 *
      * @author Lucas Rivetti Guerino
      *
+	 * @param table (string): Table name
      * @return (Stringified JSON)
 	   The user sys id is the parent oject and the table names are attributes of the parent object
 		{
@@ -181,7 +203,7 @@ TaskCounter.prototype = {
 			}
 		}
      */
-	getTotalByAssignee: function () {
+	getTotalByAssignee: function (table) {
 		try {
 			var output = {};
 			var count = 0;
@@ -190,7 +212,14 @@ TaskCounter.prototype = {
 			tasks.addQuery("assigned_to", this.user.getUniqueValue());
 			tasks.addNotNullQuery(FIELDS.ASSIGNED_TO);
 			tasks.addQuery("active", true);
-			tasks.addQuery("sys_class_name", "IN", getListTables());
+			if (table) {
+				tasks.addQuery("sys_class_name", table);
+				if (table === "incident") {
+					tasks.addQuery("state", "IN", "1,2,8");
+				}
+			} else {
+				tasks.addQuery("sys_class_name", "IN", getListTables());
+			}
 			tasks.groupBy("sys_class_name");
 			tasks.query();
 			if (!tasks.hasNext()) {
@@ -211,10 +240,27 @@ TaskCounter.prototype = {
 		}
 	},
 	
-	getTotalForAll: function () {
+	/* 
+	 * Counts the number of tasks assigned to all users defined in the query USER_QUERY
+	 * This function only runs if the isBatch is true
+	 *
+     * @author Lucas Rivetti Guerino
+     *
+	 * @param table (string): Table name
+     * @return (Stringified JSON)
+     */
+	getTotalForAll: function (table) {
 		var arrayOutput = [];
 		var output = {};
-		var users = getAllUsers();
+		var users = {};
+		if (!this.isBatch) {
+			gs.warn(
+				"[" + this.type + "] - [getTotalForAll] - " +
+				"The isBatch attribute is false so function cannot run"
+			);
+			return;
+		}
+		users = getAllUsers();
 		if (!users.hasNext()) {
 			gs.warn(
 				"[" + this.type + "] - [getTotalForAll] - " +
@@ -225,7 +271,7 @@ TaskCounter.prototype = {
 		while (users.next()) {
 			try {
 				this.setUser(users);
-				output = JSON.parse(this.getTotalByAssignee());
+				output = JSON.parse(this.getTotalByAssignee(table));
 				// We ignore objects that do not have any attributes.
 				// The attributes of these objects are the name of the task tables
 				// If the user is not assigned to any of these tables then we don't want to return
@@ -240,6 +286,14 @@ TaskCounter.prototype = {
 		return JSON.stringify(arrayOutput);
 	},
 	
+	/* 
+	 * Wipes out the payload fields on the sys_user table
+	 * We run the query using the USER_QUERY internal attribute
+	 *
+     * @author Lucas Rivetti Guerino
+     *
+     * @return (void)
+     */
 	resetFields: function () {
 		var users = {};
 		if (!this.isBatch) {
@@ -259,13 +313,13 @@ TaskCounter.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-02-28 13:40:17</sys_created_on>
         <sys_id>ae798df42f9b00107d7d59a72799b6ef</sys_id>
-        <sys_mod_count>97</sys_mod_count>
+        <sys_mod_count>99</sys_mod_count>
         <sys_name>TaskCounter</sys_name>
         <sys_package display_value="Task Assignment Counter " source="x_441902_task_ac">19d84d382f9b00107d7d59a72799b652</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Task Assignment Counter ">19d84d382f9b00107d7d59a72799b652</sys_scope>
         <sys_update_name>sys_script_include_ae798df42f9b00107d7d59a72799b6ef</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-03-10 09:32:44</sys_updated_on>
+        <sys_updated_on>2020-03-11 18:35:43</sys_updated_on>
     </sys_script_include>
 </record_update>
